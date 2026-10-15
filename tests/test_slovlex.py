@@ -32,3 +32,10 @@ def test_parse_history_without_table_rows_still_finds_versions():
 def test_ignores_versions_of_other_laws():
     html = '<tr><td><a href="https://static.slov-lex.sk/static/SK/ZZ/2004/222/20250101.html">x</a></td></tr>'
     assert parse_history(html, ZDP) == []
+
+
+def test_accepts_version_links_without_html_suffix():
+    html = '<tr><td><a href="https://www.slov-lex.sk/pravne-predpisy/SK/ZZ/2003/595/20260101">2026</a></td><td>315/2025 Z. z.</td></tr>'
+    versions = parse_history(html, ZDP)
+    assert [v.date for v in versions] == ["20260101"]
+    assert versions[0].url == "https://static.slov-lex.sk/static/SK/ZZ/2003/595/20260101.html"

@@ -138,6 +138,7 @@ def create_app(settings: Settings | None = None, *, run_scheduler: bool = True) 
                             log.info("client disconnected, stopping claude for %s", conv_id)
                             break
                 except RuntimeError as exc:
+                    store.reset_session(conv_id)
                     yield sse({"type": "error", "message": str(exc)})
                     return
                 finally:

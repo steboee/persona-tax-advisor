@@ -46,6 +46,12 @@ def test_chat_error_from_cli_is_reported(settings, monkeypatch):
     client = TestClient(create_app(settings, run_scheduler=False))
     events = sse_events(client.post("/api/chat", json={"message": "x"}))
     assert events[-1]["type"] == "error" and "not logged in" in events[-1]["message"]
+    conv_id = events[0]["id"]
+    monkeypatch.delenv("FAKE_CLAUDE_FAIL")
+    retry = sse_events(client.post("/api/chat", json={"message": "x", "conversation_id": conv_id}))
+    assert retry[-1]["type"] == "done"
+    failed, ok = claude_calls()
+    assert "--session-id" in ok and ok[ok.index("--session-id") + 1] != failed[failed.index("--session-id") + 1]
 
 
 def test_unknown_conversation_404(settings):

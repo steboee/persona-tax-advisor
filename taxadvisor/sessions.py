@@ -90,3 +90,11 @@ class ConversationStore:
             if claude_session_id:
                 conv["claude_session_id"] = claude_session_id
             self._save()
+
+    def reset_session(self, conv_id: str) -> None:
+        """Pick a fresh Claude session id when the first turn failed before Claude started the session."""
+        with self._lock:
+            conv = self._data[conv_id]
+            if not conv["started"]:
+                conv["claude_session_id"] = str(uuid.uuid4())
+                self._save()

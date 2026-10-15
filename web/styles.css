@@ -278,6 +278,9 @@ dialog::backdrop { background: rgba(0, 0, 0, .4); }
   .messages { padding: 16px 12px 8px; }
   .bubble { max-width: 94%; }
   .hint { display: none; }
+  .chip { font-size: 13px; padding: 7px 12px; box-shadow: none; }
+  .welcome { padding-top: 3vh; }
+  .welcome h1 { font-size: 22px; }
   .cards { grid-template-columns: 1fr; }
   .composer { padding-left: 10px; padding-right: 10px; }
   .mic { width: 48px; height: 48px; }

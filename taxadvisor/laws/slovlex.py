@@ -71,7 +71,8 @@ def _valid_date(d: str) -> bool:
 def parse_history(html: str, law: Law, base: str = DEFAULT_BASE) -> list[Version]:
     html = _SCRIPT_RE.sub(" ", html)
     own = f"/SK/ZZ/{law.year}/{law.number}/"
-    version_re = re.compile(rf"(?:^|/SK/ZZ/{law.year}/{law.number}/|^\./)(\d{{8}})\.html(?:[?#].*)?$")
+    # "20260101.html", "./20260101.html", ".../SK/ZZ/2003/595/20260101.html" or ".../SK/ZZ/2003/595/20260101"
+    version_re = re.compile(rf"(?:^|/SK/ZZ/{law.year}/{law.number}/|^\./)(\d{{8}})(?:\.html)?/?(?:[?#].*)?$")
     chunks = _ROW_RE.findall(html) or [html]
     found: dict[str, Version] = {}
     for chunk in chunks:

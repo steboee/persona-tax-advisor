@@ -309,7 +309,7 @@
     }
     if (doneEvent) {
       const spoken = renderAnswer(view, doneEvent.text, { ...doneEvent, mode: state.mode });
-      scrollDown();
+      view.msg.scrollIntoView({ block: "start", behavior: "smooth" });  // show the verdict first
       if (spoken && (voice || state.autoSpeak)) speak(spoken, view.sayBtn);
       if (doneEvent.memory_saved && state.view === "memory") loadMemory();
     }
@@ -578,9 +578,7 @@
     $("#speakBtn").setAttribute("aria-pressed", String(state.autoSpeak));
     $("#speakBtn").textContent = state.autoSpeak ? "🔊" : "🔇";
     $$(".mode-btn").forEach((b) => b.classList.toggle("active", b.dataset.mode === state.mode));
-    $("#input").placeholder = state.lang === "en"
-      ? "E.g. I'm at lunch with a client – can I pay with the company card?"
-      : "Napr. Som na obede s klientom, môžem platiť firemnou kartou?";
+    $("#input").placeholder = state.lang === "en" ? "Ask anything or tap 🎤" : "Napíš otázku alebo ťukni na 🎤";
   }
 
   function wire() {
