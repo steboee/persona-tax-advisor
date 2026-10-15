@@ -1,0 +1,17 @@
+{
+  "source": "slov-lex",
+  "base_url": "https://static.slov-lex.sk/static/SK/ZZ",
+  "laws": [
+    {"id": "zdp", "year": 2003, "number": 595, "name": "Zákon o dani z príjmov", "topics": ["dane z príjmov", "výdavky", "dividendy", "odpisy"], "enabled": true},
+    {"id": "dph", "year": 2004, "number": 222, "name": "Zákon o dani z pridanej hodnoty", "topics": ["DPH", "odpočet", "registrácia"], "enabled": true},
+    {"id": "danovy-poriadok", "year": 2009, "number": 563, "name": "Daňový poriadok (zákon o správe daní)", "topics": ["lehoty", "kontrola", "sankcie"], "enabled": true},
+    {"id": "uctovnictvo", "year": 2002, "number": 431, "name": "Zákon o účtovníctve", "topics": ["účtovníctvo", "doklady", "závierka"], "enabled": true},
+    {"id": "cestovne-nahrady", "year": 2002, "number": 283, "name": "Zákon o cestovných náhradách", "topics": ["pracovné cesty", "stravné"], "enabled": true},
+    {"id": "zakonnik-prace", "year": 2001, "number": 311, "name": "Zákonník práce", "topics": ["zamestnanci", "stravovanie", "mzdy"], "enabled": true},
+    {"id": "socialne-poistenie", "year": 2003, "number": 461, "name": "Zákon o sociálnom poistení", "topics": ["odvody", "sociálne poistenie"], "enabled": true},
+    {"id": "zdravotne-poistenie", "year": 2004, "number": 580, "name": "Zákon o zdravotnom poistení", "topics": ["odvody", "zdravotné poistenie"], "enabled": true},
+    {"id": "transakcna-dan", "year": 2024, "number": 279, "name": "Zákon o dani z finančných transakcií", "topics": ["transakčná daň", "platby kartou"], "enabled": true},
+    {"id": "dan-z-motorovych-vozidiel", "year": 2014, "number": 361, "name": "Zákon o dani z motorových vozidiel", "topics": ["auto", "daň z motorových vozidiel"], "enabled": true},
+    {"id": "obchodny-zakonnik", "year": 1991, "number": 513, "name": "Obchodný zákonník", "topics": ["s.r.o.", "rozdelenie zisku", "konateľ"], "enabled": true}
+  ]
+}

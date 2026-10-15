@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Skill",
+      "WebSearch",
+      "WebFetch(domain:slov-lex.sk)",
+      "WebFetch(domain:static.slov-lex.sk)",
+      "WebFetch(domain:www.slov-lex.sk)",
+      "WebFetch(domain:financnasprava.sk)",
+      "WebFetch(domain:www.financnasprava.sk)",
+      "WebFetch(domain:podpora.financnasprava.sk)",
+      "WebFetch(domain:www.socpoist.sk)",
+      "WebFetch(domain:www.employment.gov.sk)",
+      "WebFetch(domain:www.mfsr.sk)",
+      "WebFetch(domain:www.nrsr.sk)",
+      "WebFetch(domain:www.zakonypreludi.sk)",
+      "WebFetch(domain:www.podnikajte.sk)"
+    ],
+    "deny": [
+      "Bash",
+      "Read(./.env)",
+      "Read(../data/**)"
+    ]
+  }
+}
