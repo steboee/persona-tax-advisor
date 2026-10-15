@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="sk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Daňko – daňový poradca</title>
+  <meta name="description" content="Osobný daňový poradca pre tvoju s.r.o. – chat aj hlas.">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar: conversations -->
+    <aside class="sidebar" id="sidebar" aria-label="Rozhovory">
+      <div class="sidebar-head">
+        <div class="brand">
+          <img src="icon.svg" alt="" class="brand-icon">
+          <div>
+            <div class="brand-name">Daňko</div>
+            <div class="brand-sub">poradca pre tvoju s.r.o.</div>
+          </div>
+        </div>
+        <button class="icon-btn only-mobile" id="closeSidebar" aria-label="Zavrieť">✕</button>
+      </div>
+      <button class="new-chat" id="newChat"><span>＋</span> Nový rozhovor</button>
+      <div class="conv-list" id="convList"></div>
+      <div class="sidebar-foot" id="healthInfo"></div>
+    </aside>
+    <div class="scrim" id="scrim"></div>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn only-mobile" id="openSidebar" aria-label="Rozhovory">☰</button>
+        <nav class="tabs" role="tablist">
+          <button class="tab active" data-view="chat" role="tab">💬 <span>Chat</span></button>
+          <button class="tab" data-view="laws" role="tab">📜 <span>Zákony</span><b class="badge" id="lawBadge" hidden></b></button>
+          <button class="tab" data-view="memory" role="tab">🧠 <span>Pamäť</span></button>
+        </nav>
+        <div class="top-actions">
+          <button class="pill" id="langBtn" title="Jazyk rozpoznávania reči a odpovede">SK</button>
+          <button class="pill" id="speakBtn" title="Čítať odpovede nahlas" aria-pressed="true">🔊</button>
+        </div>
+      </header>
+
+      <!-- CHAT -->
+      <section class="view active" id="view-chat">
+        <div class="messages" id="messages">
+          <div class="welcome" id="welcome">
+            <img src="icon.svg" alt="" class="welcome-icon">
+            <h1>Ahoj, som Daňko.</h1>
+            <p>Opýtaj sa ma čokoľvek o daniach a peniazoch tvojej s.r.o. – napíš alebo podrž 🎤 a hovor.
+              Odpoveď začne krátkym verdiktom, ktorý ti aj prečítam.</p>
+            <div class="chips" id="chips"></div>
+          </div>
+        </div>
+
+        <form class="composer" id="composer" autocomplete="off">
+          <div class="composer-row">
+            <button type="button" class="mic" id="micBtn" aria-label="Hovoriť">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg>
+            </button>
+            <textarea id="input" rows="1" placeholder="Napr. Som na obede s klientom, môžem platiť firemnou kartou?" maxlength="8000"></textarea>
+            <button type="submit" class="send" id="sendBtn" aria-label="Odoslať">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12.6 2-12.6 2z"/></svg>
+            </button>
+          </div>
+          <div class="composer-meta">
+            <div class="mode" role="radiogroup" aria-label="Režim">
+              <button type="button" class="mode-btn active" data-mode="quick" title="Rýchla odpoveď (Sonnet, bez subagentov)">⚡ Rýchlo</button>
+              <button type="button" class="mode-btn" data-mode="deep" title="Dôkladná analýza (Opus, špecialisti, web)">🔬 Dôkladne</button>
+            </div>
+            <span class="hint" id="hint">Enter = odoslať · Shift+Enter = nový riadok</span>
+          </div>
+        </form>
+      </section>
+
+      <!-- LAWS -->
+      <section class="view" id="view-laws">
+        <div class="page">
+          <div class="page-head">
+            <div>
+              <h2>Zákony a zmeny</h2>
+              <p class="muted" id="lawUpdated">Načítavam…</p>
+            </div>
+            <div class="sync-box">
+              <label class="check"><input type="checkbox" id="syncAnalyze" checked> AI analýza dopadu</label>
+              <label class="check"><input type="checkbox" id="syncNews"> novinky z webu</label>
+              <button class="btn primary" id="syncBtn">Skontrolovať teraz</button>
+            </div>
+          </div>
+          <div class="job" id="jobStatus" hidden></div>
+          <div class="law-grid" id="lawGrid"></div>
+          <h3 class="section-title">Changelog</h3>
+          <div class="timeline" id="timeline"></div>
+        </div>
+      </section>
+
+      <!-- MEMORY -->
+      <section class="view" id="view-memory">
+        <div class="page">
+          <div class="page-head">
+            <div>
+              <h2>Čo si o tebe pamätám</h2>
+              <p class="muted">Fakty a dohody si ukladám sám počas rozhovoru (🧠). Upraviť ich môžeš aj ručne v
+                <code>advisor/profile/</code>.</p>
+            </div>
+            <button class="btn" id="memRefresh">Obnoviť</button>
+          </div>
+          <div class="cards">
+            <article class="card md" id="memMemory"></article>
+            <article class="card md" id="memCompany"></article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="tokenDialog">
+    <form method="dialog" class="token-form">
+      <h3>Prístupový token</h3>
+      <p class="muted">Server je chránený tokenom (<code>ADVISOR_TOKEN</code>).</p>
+      <input id="tokenInput" type="password" placeholder="token" required>
+      <button class="btn primary" value="ok">Uložiť</button>
+    </form>
+  </dialog>
+
+  <script src="markdown.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
